@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base, relationship
 
 from config.db import meta, engine
 
@@ -9,7 +9,7 @@ item = Table(
     Column("typeId", Integer, primary_key=True ),
     Column("totalSize", Integer),
     Column("offset", Integer),
-    relationship()
+    relationship("product")
 
 
 
@@ -18,12 +18,17 @@ item = Table(
 product = Table(
     "products",
     meta,
+    Column("id", Integer),
+    Column("name", String(255)),
+    Column("description", String(255)),
+    Column("price", Integer),
+    Column("stars", Integer),
+    Column("img", String(255)),
+    Column("location", String(255)),
+    Column("createdAt", String(255)),
+    Column("updatedAt", String(255)),
     Column("typeId", Integer, ForeignKey("items.typeId") ),
-    Column("totalSize", Integer),
-    Column("offset", Integer),
-    relationship()
-
-
-
 )
+
+meta.create_all(engine)
 
