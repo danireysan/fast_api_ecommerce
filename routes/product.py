@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Response, status
 from config.db import conn
-from models.product import users
-from schemas.product import User
+from models.product import item
+from schemas.product import Product
 from cryptography.fernet import Fernet
 from starlette.status import HTTP_204_NO_CONTENT
 key = Fernet.generate_key()
 f = Fernet(key)
-user = APIRouter()
+product = APIRouter()
 
-@user.get("/products", response_model=list[User], tags=["product"])
+@product.get("/products", response_model=list[Product], tags=["product"])
 def get_users():
-    return conn.execute(users.select()).fetchall()
+    return conn.execute(item.select()).fetchall()
 # @user.post("/products", response_model=User, )
 # def create_user(user: User):
 #     new_user = {
